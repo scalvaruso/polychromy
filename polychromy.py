@@ -1,6 +1,8 @@
-from borders import frame
+import os
 import sys
+import json
 
+print()
 
 hex_colors = {
     "Alice Blue": "#F0F8FF", "Antique White": "#FAEBD7", "Aqua": "#00FFFF", "Aquamarine": "#7FFFD4", "Azure": "#F0FFFF",
@@ -48,67 +50,99 @@ rgb_colors = {
     "Yellow": "255;255;0", "Yellow Green": "154;205;50",
 }
 
-text = []
 
-if len(sys.argv) == 1:
-    colour = rgb_colors["Cornflower Blue"]
-    text_background = rgb_colors["Pale Turquoise"]
+def main():
 
-    text.append("")
-    text.append(f"Text is {list(rgb_colors.keys())[list(rgb_colors.values()).index(colour)]} in {list(rgb_colors.keys())[list(rgb_colors.values()).index(text_background)]} background")
-    text.append("")
+    text = []
+    
+    if len(sys.argv) == 1:
 
-    frame(text, colour=colour, text_background=text_background, frame_colour=rgb_colors["Red"], frame_background=rgb_colors["Black"], alignment="centre", display="centre", spacing=0, min_width=(4+max([(len(i)) for i in text])))
-
-else:
-    colour = (sys.argv[1]).title()
-
-    if colour in rgb_colors.keys() or colour in hex_colors.keys():
-
-        r,g,b = rgb_colors[colour].split(";")
-        cr = abs(int(r)-255)
-        cg = abs(int(g)-255)
-        cb = abs(int(b)-255)
-
-        text = ("",
-            f"{colour}",
-            "","","",
-            "sRGB (r, g, b):",(f"{r},{g},{b}","right"),
-            "",
-            "Hex triplet:",(f"{hex_colors[colour]}","right"),
-            ""
-        )
+        color_in = rgb_colors["Pale Turquoise"]
+        comment_1 = "  ^^^ Returning color name"
+        comment_2 = "Returning HEX code ^^^"
+        comment_3 = "Returning RGB code ^^^"
         
-        frame(text, colour=f"{cr};{cg};{cb}", text_background=rgb_colors[colour], frame_background=rgb_colors[colour], display="centre", min_width=26, max_width=26)
+    else:
 
-    elif colour in rgb_colors:
+        color_in = sys.argv[1]
+        comment_1 = ""
+        comment_2 = ""
+        comment_3 = ""
 
-        r,g,b = rgb_colors[colour].split(";")
+    color_name, color_hex, color_rgb, unknown = valid_color(color_in)
+
+    if unknown:
+        r,g,b = "???"
+        cr = 255
+        cg = 0
+        cb = 0
+    else:
+        r,g,b = color_rgb.split(";")
         cr = abs(int(r)-255)
         cg = abs(int(g)-255)
         cb = abs(int(b)-255)
 
-        text = ("",
-            f"{list(rgb_colors.keys())[list(rgb_colors.values()).index(colour)]}",
-            "","","",
-            "sRGB (r, g, b):",(f"{r},{g},{b}","right"),
-            "",
-            "Hex triplet:",(f"{hex_colors[colour]}","right"),
-            ""
-        )
+    text = [
+            "{:<26}".format(f"{color_name}"),
+            "{:^26}".format(f"{comment_1}"),
+            "{:^26}".format(""),
+            "{:^26}".format(""),
+            "{:<26}".format("Hex triplet:"),
+            "{:>26}".format(f"{color_hex}"),
+            "{:^26}".format(f"{comment_2}"),
+            "{:<26}".format("sRGB (r, g, b):"),
+            "{:>26}".format(f"{r},{g},{b}"),
+            "{:^26}".format(f"{comment_3}"),
+    ]
 
-        frame(text, colour=f"{cr};{cg};{cb}", text_background=rgb_colors[colour], frame_background=rgb_colors[colour], display="centre", min_width=26, max_width=26)
+    # Retrieve terminal width and setting up frame size
+    adjustment = " " * int(((os.get_terminal_size().columns) - (40)) / 2)
+    or_line = "═" * 38
+    filling = " " * 38
+    side_space = " " * 6
+
+    # Printing color details
+
+    display_menu  = adjustment + f"\033[38;2;{cr};{cg};{cb};48;2;{color_rgb}m" + "╔" + or_line + "╗" + "\033[0m" + "\n"
+    display_menu += adjustment + f"\033[38;2;{cr};{cg};{cb};48;2;{color_rgb}m" + "║" + filling + "║" +"\033[0m\n"
+    
+    for item in text:
+        display_menu += adjustment + f"\033[38;2;{cr};{cg};{cb};48;2;{color_rgb}m" + "║" + side_space + item + side_space + "║" +"\033[0m\n"
+    
+    display_menu += adjustment + f"\033[38;2;{cr};{cg};{cb};48;2;{color_rgb}m" + "║" + filling + "║" + "\033[0m\n"
+    display_menu += adjustment + f"\033[38;2;{cr};{cg};{cb};48;2;{color_rgb}m" + "╚" + or_line + "╝" + "\033[0m\n"
+
+    print(display_menu)
+
+
+def valid_color(color):
+
+    text = []
+    unknown = False
+
+    if color.title() in rgb_colors.keys():
+        color_name = color.title()
+        color_hex = hex_colors[color_name]
+        color_rgb = rgb_colors[color_name]
+
+    elif color in rgb_colors.values():
+        color_name = list(rgb_colors.keys())[list(rgb_colors.values()).index(color)]
+        color_hex = hex_colors[color_name]
+        color_rgb = color
+
+    elif color.upper() in hex_colors.values():
+        color_name = list(hex_colors.keys())[list(hex_colors.values()).index(color.upper())]
+        color_hex = color.upper()
+        color_rgb = rgb_colors[color_name]
 
     else:
-        text = ("",
-            "Unknown Colour",
-            "","","",
-            "sRGB (r, g, b):",("???,???,???","right"),
-            "",
-            "Hex triplet:",("#??????","right"),
-            ""
-        )
-        
-        frame(text, colour=rgb_colors["White"], frame_colour=rgb_colors["Red"], text_background=rgb_colors["Black"], frame_background=rgb_colors["Black"], display="centre", min_width=30, max_width=30)
-    
-    
+        color_name = f"{color} Unknown Colour"
+        color_hex = "#??????"
+        color_rgb = rgb_colors["Light Gray"]
+        unknown = True
+
+    return color_name, color_hex, color_rgb, unknown
+
+
+if __name__ == "__main__":
+    main()
