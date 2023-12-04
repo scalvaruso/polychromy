@@ -13,14 +13,14 @@
 
 ## Description
 
-Polychromy is a Python script that takes a string of text and prints it out in a specified colour.
+Polychromy is a Python script to manipulate the color of text.
 
 ## Features
 
 - Prints text of a specified colour in a specified colour background.
 - Prints out Hex and RGB values of a given colour in a square of the given colour.
 
-## Latest Version 0.0.1
+## Latest Version 0.0.2
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ Polychromy is a Python script that takes a string of text and prints it out in a
 
 ### Prerequisites
 
-This script relies on the Python standard library and does not require any additional dependencies.
+This script relies on the Python standard library and ```textlinebreaker```.
 
 ### Installation
 
@@ -49,13 +49,13 @@ This script relies on the Python standard library and does not require any addit
 
 - Import the package in your program
 
-```python
-  # from polychromy import [functions not yet defined]
+```Python
+  from polychromy import color_show
 ```
 
 ## Usage
 
-... _to be completed_ ...
+Calling the function ```color_show()``` inside your program will print a square of the color given as input to the function, and its HEX and RGB values.
 
 ### Parameters
 
@@ -63,7 +63,23 @@ This script relies on the Python standard library and does not require any addit
 
 ### Examples
 
-... _to be completed_ ...
+```Python
+import sys
+from polychromy import color_show
+
+# If you run this program without any argument it asks you for a color and prints it out to the screen.
+if len(sys.argv) == 1:
+
+    color_in = input("Enter a colour: ")
+    color_show(color_in)
+
+# Giving a color as argument it prints it out directly to the screen
+# Accepted values are: Name colors, HEX and RGB values.
+
+else:
+    color_show()
+
+```
 
 ## Contributing
 
