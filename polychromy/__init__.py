@@ -1,5 +1,5 @@
-__version__ = '0.0.2'
+__version__ = '1.0.0'
 
-__all__ = ["valid_color"]
+__all__ = ["colorate","show"]
 
 from .polychromy import *

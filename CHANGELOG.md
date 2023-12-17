@@ -1,19 +1,22 @@
 #
 
-## [0.0.2] - 2023-12-04
+## [1.0.0] - 2023-12-17
 
 ### Added
 
-- Json file with list of colors.
+- Function ```Colorate``` to print any string using any color for background and for text.
 
+<!--
 ### Changed
 
-- Color list imported from json file
-
 ### Fixed
+-->
 
--
+## [0.0.2] - 2023-12-04
 
-#### [0.0.1] - 2023-12-01
+- **Added** Json file with list of colors.
+- **Changed** Color list imported from json file
 
-- First version
+## [0.0.1] - 2023-12-01
+
+- **First version**

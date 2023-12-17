@@ -13,14 +13,14 @@
 
 ## Description
 
-Polychromy is a Python script to manipulate the color of text.
+Polychromy is a Python script to manipulate the colors of a text.
 
 ## Features
 
-- Prints text of a specified colour in a specified colour background.
-- Prints out Hex and RGB values of a given colour in a square of the given colour.
+- Function ```colorate``` prints text of a specified colour in a specified colour background.
+- Function ```show``` prints out color details such as Hex and RGB values of a given colour in a square of the given colour.
 
-## Latest Version 0.0.2
+## Latest Version 1.0.0
 
 ## Table of Contents
 
@@ -50,36 +50,78 @@ This script relies on the Python standard library and ```textlinebreaker```.
 - Import the package in your program
 
 ```Python
-  from polychromy import color_show
+  from polychromy import colorate
 ```
 
 ## Usage
 
-Calling the function ```color_show()``` inside your program will print a square of the color given as input to the function, and its HEX and RGB values.
+Calling the function ```colorate``` inside your program will return a printable string of the desired color.
 
 ### Parameters
 
-... _to be completed_ ...
+The function accept most color names, RGB values ```[0-255];[0-255];[0-255]```, Hex values ```#[00-FF][00-FF][00-FF]```, xterm color number in the format ```x[0-255]```, and ANSI codes.[^Note]
+
+[^Note]: The output color might differ from the desired one depending on terminal used.
 
 ### Examples
 
+Here are some examples of how to use polychromy.
+
+<!--- Example 01 --->
+#### Show
+
+Using the function ```show``` you can print out color details such as Hex and RGB values of a given colour in a square of the given colour.
+
 ```Python
 import sys
-from polychromy import color_show
+from polychromy import show
 
 # If you run this program without any argument it asks you for a color and prints it out to the screen.
 if len(sys.argv) == 1:
 
     color_in = input("Enter a colour: ")
-    color_show(color_in)
+    show(color_in)
 
 # Giving a color as argument it prints it out directly to the screen
 # Accepted values are: Name colors, HEX and RGB values.
 
 else:
-    color_show()
+    show()
 
 ```
+
+##### Output 1
+
+![example01](https://raw.githubusercontent.com/scalvaruso/polychromy/main/images/example01.png)
+
+<!--- Example 02 --->
+#### Colorate
+
+Using the function ```colorate``` you can print text of a specified colour in a specified colour background.
+
+```Python
+from polychromy import colorate
+
+# Texts to print
+text1 = "There are only 10 kinds of people in this world:"
+text2 = "Those who know binary and Those who don't."
+
+# Foreground (text) coors
+foreground_1 = "#F5F5F5"
+foreground_2 = 90
+
+# Background colors
+background_1 = "0;128;128"
+background_2 = "Cosmic Latte"
+
+print(colorate(text1,foreground_1,background_1))
+print(colorate(text2,foreground_2,background_2))
+
+```
+
+##### Output 2
+
+![example02](https://raw.githubusercontent.com/scalvaruso/polychromy/main/images/example02.png)
 
 ## Contributing
 
