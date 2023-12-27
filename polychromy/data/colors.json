@@ -151,7 +151,7 @@
         "bg": "",
         "alt": ""
     },
-    "Bright Black (System Color)": {
+    "Bright Black": {
         "hex": "#767676",
         "rgb": "118;118;118",
         "xterm": "8",
@@ -159,7 +159,7 @@
         "bg": "100",
         "alt": "Grey 46"
     },
-    "Bright Blue (System Color)": {
+    "Bright Blue": {
         "hex": "#3B78FF",
         "rgb": "59;120;255",
         "xterm": "12",
@@ -167,7 +167,7 @@
         "bg": "104",
         "alt": ""
     },
-    "Bright Cyan (System Color)": {
+    "Bright Cyan": {
         "hex": "#61D6D6",
         "rgb": "97;214;214",
         "xterm": "14",
@@ -175,7 +175,7 @@
         "bg": "106",
         "alt": ""
     },
-    "Bright Green (System Color)": {
+    "Bright Green": {
         "hex": "#16C60C",
         "rgb": "22;198;12",
         "xterm": "10",
@@ -183,7 +183,7 @@
         "bg": "102",
         "alt": ""
     },
-    "Bright Magenta (System Color)": {
+    "Bright Magenta": {
         "hex": "#B4009E",
         "rgb": "180;0;158",
         "xterm": "13",
@@ -191,7 +191,7 @@
         "bg": "105",
         "alt": ""
     },
-    "Bright Red (System Color)": {
+    "Bright Red": {
         "hex": "#E74856",
         "rgb": "231;72;86",
         "xterm": "9",
@@ -199,7 +199,7 @@
         "bg": "101",
         "alt": ""
     },
-    "Bright White (System Color)": {
+    "Bright White": {
         "hex": "#F2F2F2",
         "rgb": "242;242;242",
         "xterm": "15",
@@ -207,7 +207,7 @@
         "bg": "107",
         "alt": ""
     },
-    "Bright Yellow (System Color)": {
+    "Bright Yellow": {
         "hex": "#F9F1A5",
         "rgb": "249;241;165",
         "xterm": "11",

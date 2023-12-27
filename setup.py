@@ -2,7 +2,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name="polychromy",
-    version="1.0.0",
+    version="1.0.1",
     packages=find_namespace_packages(include=['polychromy', 'polychromy.*'], exclude=['images']),
     # Use find_packages and exclude the folder
     include_package_data=True,
