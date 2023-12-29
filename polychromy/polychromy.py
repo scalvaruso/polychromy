@@ -167,7 +167,8 @@ def _valid_color(color, text=True):
     
     palette = _get_color(color) # [0]=name, [1]=alt_name, [2]=color_x, [3]=color_hex, [4]=color_rgb, [5]=color_fg, [6]=color_bg, [7]=unknown
 
-    strcolor = str(color)
+    if isinstance(color,int):
+        color = str(color)
     
     if palette[7]:
         if text:
@@ -179,7 +180,7 @@ def _valid_color(color, text=True):
             return f"\033[{palette[5]}m"
         else:
             return f"\033[{palette[6]}m"
-    elif strcolor[1:] == palette[2]:
+    elif color[1:] == palette[2]:
         if text:
             return f"\033[38;5;{palette[2]}m"
         else:
