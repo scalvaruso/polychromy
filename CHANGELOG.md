@@ -1,14 +1,20 @@
 #
 
+## [1.0.2] - 2023-12-29
+
+### Fixed
+
+- Resolved compatibility issue when color is defined by an integer.
+
 ## [1.0.1] - 2023-12-27
 
-### Changed
-
-- Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
+- **Changed:** Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
 
 <!--
 
 ### Added
+
+### Changed
 
 ### Fixed
 -->

@@ -1007,7 +1007,7 @@
         "bg": "",
         "alt": "Magenta"
     },
-    "Gainsboro Gray": {
+    "Gainsboro": {
         "hex": "#DCDCDC",
         "rgb": "220;220;220",
         "xterm": "",

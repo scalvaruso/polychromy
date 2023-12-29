@@ -1,10 +1,14 @@
 #
 
-## Release Notes - Version 1.0.1
+## Release Notes - Version 1.0.2
 
-- Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
+- Fixed compatibility issue when color is defined by an integer.
 
 ___
+
+### Release Notes - Version 1.0.1
+
+- Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
 
 ### Release Notes - Version 1.0.0
 

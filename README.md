@@ -20,7 +20,7 @@ Polychromy is a Python script to manipulate the colors of a text.
 - Function ```colorate``` prints text of a specified colour in a specified colour background.
 - Function ```show``` prints out color details such as Hex and RGB values of a given colour in a square of the given colour.
 
-## Latest Version 1.0.1
+## Latest Version 1.0.2
 
 ## Table of Contents
 
@@ -47,14 +47,21 @@ This script relies on the Python standard library and ```textlinebreaker```.
   pip install polychromy
 ```
 
-- Import the package in your program
+- Import the selected package in your program
 
 ```Python
   from polychromy import colorate
 ```
 
+or
+
+```Python
+  from polychromy import show
+```
+
 ## Usage
 
+Calling the function ```show``` your program will print a square of the selected color with details about it.
 Calling the function ```colorate``` inside your program will return a printable string of the desired color.
 
 ### Parameters
