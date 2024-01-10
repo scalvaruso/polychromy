@@ -359,14 +359,6 @@
         "bg": "",
         "alt": ""
     },
-    "Colorlive": {
-        "hex": "#3A96DD",
-        "rgb": "58;150;221",
-        "xterm": "6",
-        "fg": "36",
-        "bg": "46",
-        "alt": ""
-    },
     "Cosmic Latte": {
         "hex": "#FFF8E7",
         "rgb": "255;248;231",
@@ -2734,6 +2726,14 @@
         "fg": "",
         "bg": "",
         "alt": ""
+    },
+    "Sensaimidori": {
+        "hex": "#374231",
+        "rgb": "55;66;49",
+        "xterm": "",
+        "fg": "",
+        "bg": "",
+        "alt": "Thousand Year Old Green"
     },
     "Sienna": {
         "hex": "#A0522D",
