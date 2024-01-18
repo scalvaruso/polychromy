@@ -2975,6 +2975,14 @@
         "bg": "",
         "alt": ""
     },
+    "Thousand Year Old Green": {
+        "hex": "#374231",
+        "rgb": "55;66;49",
+        "xterm": "",
+        "fg": "",
+        "bg": "",
+        "alt": "Sensaimidori"
+    },
     "Tomato": {
         "hex": "#FF6347",
         "rgb": "255;99;71",
