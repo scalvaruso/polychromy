@@ -1,10 +1,16 @@
 #
 
-## Release Notes - Version 1.0.2
+## Release Notes - Version 1.1.0
 
-- Fixed compatibility issue when color is defined by an integer.
+- Colors are now fetched from a remote .json file that can be updated in real time with new color names.
+
+- Optimized algorithm to check validity of the color.
 
 ___
+
+### Release Notes - Version 1.0.2
+
+- Fixed compatibility issue when color is defined by an integer.
 
 ### Release Notes - Version 1.0.1
 

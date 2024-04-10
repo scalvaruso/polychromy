@@ -1,7 +1,7 @@
 [project]
 name = "polychromy"
-version = "1.0.2"
-dependencies = ["textlinebreaker >= 0.1.0 "]
+version = "1.1.0"
+dependencies = ["textlinebreaker >= 0.1.0 ","requests"]
 requires-python = ">=3.9"
 authors = [
     { name="scalvaruso", email="calvaruso.simone@gmail.com" },
@@ -9,7 +9,7 @@ authors = [
 description = "A module to print a strings in a given colour, with a given colour background"
 readme = "README.md"
 license = {text = "MIT License"}
-keywords = ["ansi", "background", "color", "colour", "format", "foreground", "Hex", "RGB", "sRGB", "text"]
+keywords = ["ansi", "background", "color", "colour", "colorate", "font", "format", "foreground", "Hex", "paint", "RGB", "sRGB", "text"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",

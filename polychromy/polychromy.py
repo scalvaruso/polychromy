@@ -1,8 +1,11 @@
+import json
 import os
 import re
+import requests
+from requests.exceptions import RequestException
 import sys
-import json
 from textlinebreaker import split_line
+
 
 # Create a class for color
 class Color:
@@ -19,15 +22,22 @@ class Color:
 
 # Show example of color
 def main():
+
     show()
 
 
 # Import colors from json file
 def _import_colors():
 
-    data_path = os.path.join(os.path.dirname(__file__), 'data', 'colors.json')
-    with open(data_path, 'r') as file:
-        json_colors = json.load(file)
+    url = 'https://raw.githubusercontent.com/scalvaruso/polychromy/main/dynamic_data/livecolors.json'
+    try:
+        response = requests.get(url)
+        json_colors = response.json()
+
+    except RequestException:
+        data_path = os.path.join(os.path.dirname(__file__), 'data', 'colors.json')
+        with open(data_path, 'r') as file:
+            json_colors = json.load(file)
 
     # Create instances of Color class for each color
     colors = {}
@@ -47,7 +57,7 @@ def _import_colors():
 
 # Print a square in the given color with
 # name, xterm, hex, and rgb values of the given color 
-def show(color_in="", colors = _import_colors()):
+def show(color_in="", colors=_import_colors()):
 
     # Check if any argument is passed to the function
     if color_in != "":
@@ -108,9 +118,10 @@ def show(color_in="", colors = _import_colors()):
         l += 1
     text.append("{:^30}".format(""))
     if alt_names:
-        text.append("{:<30}".format(f"Other names: "+ "{:.>17}".format(f" {alt_names}")))
-        text.append("{:^30}".format(""))
-        l += 2
+        alt_line = ("{:>30}".format(f"Other names: "+ "{:.>17}".format(f" {alt_names}")))
+        for line in split_line(f"{alt_line}",30,"right"):
+            text.append(line)
+            l += 1
     if color_fg:
         text.append("{:^30}".format(f"ANSI Color Codes"))
         text.append("{:^30}".format("Foreground: " + "{:.>18}".format(f" {color_fg}")))
@@ -135,23 +146,26 @@ def show(color_in="", colors = _import_colors()):
         color_rgb = syscol
 
     # Print color details
-    display_menu  = "\n" + adjustment + colorate(f"╔{or_line}╗", text_color, color_rgb) + "\n"
-    display_menu  += adjustment + colorate(f"║{filling}║", text_color, color_rgb) + "\n"
+    display_color  = "\n" + adjustment + colorate(f"╔{or_line}╗", text_color, color_rgb) + "\n"
+    display_color  += adjustment + colorate(f"║{filling}║", text_color, color_rgb) + "\n"
     for item in text:
-        display_menu  += adjustment + colorate(f"║{side_space + item + side_space}║", text_color, color_rgb) + "\n"
-    display_menu  += adjustment + colorate(f"║{filling}║", text_color, color_rgb) + "\n"
-    display_menu  += adjustment + colorate(f"╚{or_line}╝", text_color, color_rgb) + "\n"
+        display_color  += adjustment + colorate(f"║{side_space + item + side_space}║", text_color, color_rgb) + "\n"
+    display_color  += adjustment + colorate(f"║{filling}║", text_color, color_rgb) + "\n"
+    display_color  += adjustment + colorate(f"╚{or_line}╝", text_color, color_rgb) + "\n"
 
-    print(display_menu)
+    print(display_color)
 
 
 # This function return a given string with escape codes
 # to print it in the given foreground and background colors.
-def colorate(txt,fg_col=37,bg_col=0):
+def colorate(txt, fg_col=37, bg_col=0):
     
     # Check validity of the given colors
-    fg_color = _valid_color(fg_col)
-    bg_color = _valid_color(bg_col, False)
+    fg_color = _valid_color(str(fg_col))
+    if bg_col == 0:
+        bg_color = "\033[0m"
+    else:
+        bg_color = _valid_color(str(bg_col), False)
     
     # If foreground color is equal to the reset code
     # Remove foreground color code
@@ -163,33 +177,96 @@ def colorate(txt,fg_col=37,bg_col=0):
 
 
 # Check validity of color
-def _valid_color(color, text=True):
-    
-    palette = _get_color(color) # [0]=name, [1]=alt_name, [2]=color_x, [3]=color_hex, [4]=color_rgb, [5]=color_fg, [6]=color_bg, [7]=unknown
+def _valid_color(color, text=True, all_colors = _import_colors()):
 
-    if isinstance(color,int):
-        color = str(color)
+    if color.title() in all_colors.keys():  #Color Name
+        color_rgb = all_colors[color.title()].rgb
+        if text:
+            return f"\033[38;2;{color_rgb}m"
+        else:
+            return f"\033[48;2;{color_rgb}m"
+
+    elif _check_ansi(color):  #ANSI Color
+        if text:
+            return f"\033[{color}m"
+        else:
+            return f"\033[{color}m"
+
+    elif _check_Xterm(color):   #Xterm Color
+        if text:
+            return f"\033[38;5;{color[1:]}m"
+        else:
+            return f"\033[48;5;{color[1:]}m"
+
+    elif _check_RGB(color): #RGB Color
+        if text:
+            return f"\033[38;2;{color}m"
+        else:
+            return f"\033[48;2;{color}m"
     
-    if palette[7]:
+    elif rgb := _check_HEX(color): #HEX Color
+        if text:
+            return f"\033[38;2;{rgb}m"
+        else:
+            return f"\033[48;2;{rgb}m"
+    
+    else:
         if text:
             return "\033[37m"
         else:
             return "\033[0m"
-    elif color==palette[5] or color==palette[6]:
-        if text:
-            return f"\033[{palette[5]}m"
+
+
+# Check if the input is a valid ANSI color code.
+def _check_ansi(color):
+    
+    if matches := re.search("^([0-9]{1,3})$", str(color)):
+        if int(color) in [0, 30, 31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 43, 44, 45, 46, 47, 90, 91, 92, 93, 94, 95, 96, 97, 100, 101, 102, 103, 104, 105, 106, 107]:
+            return True
         else:
-            return f"\033[{palette[6]}m"
-    elif color[1:] == palette[2]:
-        if text:
-            return f"\033[38;5;{palette[2]}m"
-        else:
-            return f"\033[48;5;{palette[2]}m"
+            return None
     else:
-        if text:
-            return f"\033[38;2;{palette[4]}m"
+        return False
+            
+
+# Check if the Xterm Number is valid
+def _check_Xterm(color):
+        
+    if matches := re.search("^[xX]([0-9]{1,3})$", color):
+        color = int(matches.group(1))
+        if 0 <= color < 256:
+            return True
         else:
-            return f"\033[48;2;{palette[4]}m"
+            return None
+    else:
+        return False
+    
+
+def _check_RGB(color):
+    # Check if the RGB color code is valid and in the list of colors
+    if re.search("^([0-9]*;[0-9]*;[0-9]*)$", color):
+
+        r,g,b = color.split(";")
+
+        if (0<=int(r)<=255) and (0<=int(g)<=255) and (0<=int(b)<=255):
+            return True
+        else:
+            return None
+    else:
+        return False   
+
+
+def _check_HEX(color):
+    # Check if the HEX color code is valid and in the list of colors
+    if re.search("^(#[0-9A-Za-z]{6})$", color):
+        if matches := re.search("^#([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$", color):
+            #Return hex values coverted to dec for r, g, b
+            #group(1): hex value for "r"; group(2): hex value for "g"; group(3): hex value for "b";
+            return f"{int(matches.group(1), 16)};{int(matches.group(2), 16)};{int(matches.group(3), 16)}"
+        else:
+            return None
+    else:
+        return False
 
 
 # Get and return details about a given color
@@ -197,59 +274,49 @@ def _get_color(color, all_colors = _import_colors()):
 
     unknown = False
 
-    # Check if the input is a valid ANSI color code.
-    if matches := re.search("^([0-9]{1,3})$", str(color)):
-
+    # If the input is a valid ANSI color code find name.
+    if _check_ansi(color):
         try:
             color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.fg == str(color)))
         except:
-            try:
-                color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.bg == str(color)))
-            except:
-                return _invalid_range()
-             
-    # Check if the color name is in the list of colors
-    elif color.title() in all_colors.keys():
-        color_name = color.title()
+            color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.bg == str(color)))
+    # Return error message if ANSI value is out of range
+    elif _check_ansi(color) == None:
+        return _invalid_range()
 
     # Check if the Xterm Number is valid
-    elif matches := re.search("^[xX]([0-9]{1,3})$", color):
-        color = int(matches.group(1))
-        if 0 <= color < 256:
-            color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.xterm == str(color)))
-        else:
-            return _invalid_range()
+    elif _check_Xterm(color):
+        color = color[1:]
+        color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.xterm == str(color)))
+    # Return error message if Xterm value is out of range
+    elif _check_Xterm(color) == None:
+        return _invalid_range()
 
     # Check if the RGB color code is valid and in the list of colors
-    elif matches := re.search("^([0-9]*;[0-9]*;[0-9]*)$", color):
+    elif _check_RGB(color):
+        try:
+            #color_name = list(all_colors.keys())[list(map(lambda x: x['rgb'], all_colors.values())).index(matches.group(1))]
+            color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.rgb == color))#, None)
+        except:
+            # Return an error message for an invalid color code
+            return _no_name(color)
+    elif _check_RGB(color) == None:
+        return _invalid_range()
 
-        r,g,b = color.split(";")
-
-        if (0<=int(r)<=255) and (0<=int(g)<=255) and (0<=int(b)<=255):
-
-            try:
-                #color_name = list(all_colors.keys())[list(map(lambda x: x['rgb'], all_colors.values())).index(matches.group(1))]
-                color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.rgb == matches.group(1)))#, None)
-            except:
-                return _no_name(matches.group(1))
-            
-        # Return an error message for an invalid color code
-        else:
-            return _invalid_range()
-                
     # Check if the HEX color code is valid and in the list of colors
-    elif matches := re.search("^(#[0-9A-Za-z]{6})$", color):
-        color = matches.group(1).upper()
+    elif _check_HEX(color):
+        color = color.upper()
         try:
             #color_name = list(all_colors.keys())[list(map(lambda x: x['hex'], all_colors.values(color))).index()]
             color_name = next((col_name for col_name, color_obj in all_colors.items() if color_obj.hex == color))#, None)
         except:
-            if matches := re.search("^(#[0-9A-F]{6})$", color):
-                return _no_name(matches.group(1))
-            
-            # Return an error message for an invalid color range
-            else:
-                return _invalid_range()
+            return _no_name(color)
+    elif _check_HEX(color) == None:
+        return _invalid_range()
+
+    # Check if the color name is in the list of colors
+    elif color.title() in all_colors.keys():
+        color_name = color.title()
 
     # Return an error message for an unknown color name
     else:
