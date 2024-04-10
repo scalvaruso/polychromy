@@ -3143,12 +3143,12 @@
         "bg": "",
         "alt": ""
     },
-    "Zzz Color Live Test": {
-        "hex": "#40E0D0",
-        "rgb": "64;224;208",
-        "xterm": "",
-        "fg": "",
-        "bg": "",
-        "alt": "Imported from web"
+    "Live Test": {
+        "hex": "#61D6D6",
+        "rgb": "97;214;214",
+        "xterm": "14",
+        "fg": "96",
+        "bg": "106",
+        "alt": "Web Cyan"
     }
 }

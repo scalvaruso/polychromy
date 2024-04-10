@@ -2727,6 +2727,14 @@
         "bg": "",
         "alt": ""
     },
+    "Sensaimidori": {
+        "hex": "#374231",
+        "rgb": "55;66;49",
+        "xterm": "",
+        "fg": "",
+        "bg": "",
+        "alt": "Thousand Year Old Green"
+    },
     "Sienna": {
         "hex": "#A0522D",
         "rgb": "160;82;45",
@@ -2967,6 +2975,14 @@
         "bg": "",
         "alt": ""
     },
+    "Thousand Year Old Green": {
+        "hex": "#374231",
+        "rgb": "55;66;49",
+        "xterm": "",
+        "fg": "",
+        "bg": "",
+        "alt": "Sensaimidori"
+    },
     "Tomato": {
         "hex": "#FF6347",
         "rgb": "255;99;71",
@@ -3126,5 +3142,13 @@
         "fg": "",
         "bg": "",
         "alt": ""
+    },
+    "Live Test": {
+        "hex": "#61D6D6",
+        "rgb": "97;214;214",
+        "xterm": "14",
+        "fg": "96",
+        "bg": "106",
+        "alt": "Local Cyan"
     }
 }
