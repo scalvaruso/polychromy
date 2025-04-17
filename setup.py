@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 setup(
     name="polychromy",
     version="1.1.0",
-    packages=find_namespace_packages(include=['polychromy', 'polychromy.*'], exclude=['images']),
+    packages=find_namespace_packages(include=['polychromy', 'polychromy.*'], exclude=['images', 'VE_polychromy']),
     # Use find_packages and exclude the folder
     include_package_data=True,
     install_requires=["textlinebreaker >= 0.1.0 ", "requests"],  # Add any dependencies here
