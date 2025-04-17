@@ -181,40 +181,26 @@ def _valid_color(color, text=True, all_colors = _import_colors()):
 
     if color.title() in all_colors.keys():  #Color Name
         color_rgb = all_colors[color.title()].rgb
-        if text:
-            return f"\033[38;2;{color_rgb}m"
-        else:
-            return f"\033[48;2;{color_rgb}m"
+        return f"\033[38;2;{color_rgb}m" if text else f"\033[48;2;{color_rgb}m"
 
     elif _check_ansi(color):  #ANSI Color
-        if text:
-            return f"\033[{color}m"
+        # Return correct ANSI color code for text and backgroud
+        if int(color) in [30,31,32,33,34,35,36,37,90,91,92,93,94,95,96,97]:
+            return f"\033[{color}m" if text else f"\033[{int(color)+10}m"
         else:
-            return f"\033[{color}m"
+            return f"\033[{int(color)-10}m" if text else f"\033[{color}m"
 
     elif _check_Xterm(color):   #Xterm Color
-        if text:
-            return f"\033[38;5;{color[1:]}m"
-        else:
-            return f"\033[48;5;{color[1:]}m"
+        return f"\033[38;5;{color[1:]}m" if text else f"\033[48;5;{color[1:]}m"
 
     elif _check_RGB(color): #RGB Color
-        if text:
-            return f"\033[38;2;{color}m"
-        else:
-            return f"\033[48;2;{color}m"
+        return f"\033[38;2;{color}m" if text else f"\033[48;2;{color}m"
     
     elif rgb := _check_HEX(color): #HEX Color
-        if text:
-            return f"\033[38;2;{rgb}m"
-        else:
-            return f"\033[48;2;{rgb}m"
+        return f"\033[38;2;{rgb}m" if text else f"\033[48;2;{rgb}m"
     
     else:
-        if text:
-            return "\033[37m"
-        else:
-            return "\033[0m"
+        return "\033[37m" if text else "\033[0m"
 
 
 # Check if the input is a valid ANSI color code.
