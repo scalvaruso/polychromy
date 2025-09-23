@@ -4,8 +4,8 @@ import re
 import requests
 from requests.exceptions import RequestException
 import sys
-from textlinebreaker import split_line
-
+# from textlinebreaker import split_line
+from textlinebreaker import TextLineBreaker
 
 # Create a class for color
 class Color:
@@ -113,13 +113,17 @@ def show(color_in="", colors=_import_colors()):
     # Create the output text
     text = []
     l = 0
-    for line in split_line(f"{color_name}",30,"centre"):
+    color_name_lines = TextLineBreaker(f"{color_name}",30,"centre")
+    for line in list(color_name_lines):
+    #for line in split_line(f"{color_name}",30,"centre"):
         text.append(line)
         l += 1
     text.append("{:^30}".format(""))
     if alt_names:
         alt_line = ("{:>30}".format(f"Other names: "+ "{:.>17}".format(f" {alt_names}")))
-        for line in split_line(f"{alt_line}",30,"right"):
+        alt_name_lines = TextLineBreaker(f"{alt_line}",30,"right")
+        for line in list(alt_name_lines):
+        #for line in split_line(f"{alt_line}",30,"right"):
             text.append(line)
             l += 1
     if color_fg:
