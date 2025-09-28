@@ -8,10 +8,11 @@ setup(
     ),
     include_package_data=True,  # Picks up MANIFEST.in if present
     install_requires=[
-        "textlinebreaker>=0.1.0",
+        "textlinebreaker>=1.0.0",
         "requests",
     ],
     package_data={
         "polychromy": ["data/colors.json"],  # Explicit data file(s)
     },
+    python_requires=">=3.9",
 )

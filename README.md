@@ -1,6 +1,6 @@
 # Polychromy
 
-[<img src="https://img.shields.io/badge/polychromy-py-blue?style=flat&logo=python&logoWidth=20.svg/"></a>](https://github.com/scalvaruso/polychromy/)
+[![Static Badge](https://img.shields.io/badge/polychromy-py-blue%3Fstyle%3Dflat%26logo%3Dpython%26logoWidth%3D20.svg?logo=python&color=blue)](https://github.com/scalvaruso/polychromy/)
 [![PyPI - Version](https://img.shields.io/pypi/v/polychromy?logo=pypi&logoColor=white&color=blue)](https://pypi.org/project/polychromy/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/polychromy?logo=python)](https://pypi.org/project/polychromy/)
 [![Downloads](https://static.pepy.tech/badge/polychromy)](https://pepy.tech/project/polychromy)
@@ -20,7 +20,7 @@ Polychromy is a Python script to manipulate the colors of a text.
 - Function ```colorate``` prints text of a specified colour in a specified colour background.
 - Function ```show``` prints out color details such as Hex and RGB values of a given colour in a square of the given colour.
 
-## Latest Version 1.1.0
+## Latest Version 1.1.1
 
 ## Table of Contents
 
@@ -37,14 +37,20 @@ Polychromy is a Python script to manipulate the colors of a text.
 
 ### Prerequisites
 
-This script relies on the Python standard library, and the libraries ```requests``` and ```textlinebreaker```.
+This script relies on the Python standard library, and the libraries ```requests``` and ```textlinebreaker``` (v1.0.0+ with the `TextLineBreaker` class).
 
 ### Installation
 
 - Install the package with pip
 
 ```bash
-  pip install polychromy
+pip install polychromy
+```
+
+- or upgrade it with
+
+```bash
+pip install --upgrade polychromy
 ```
 
 - Import the selected package in your program
@@ -61,23 +67,22 @@ or
 
 ## Usage
 
-Calling the function ```show``` your program will print a square of the selected color with details about it.
-Calling the function ```colorate``` inside your program will return a printable string of the desired color.
+Calling the function `show` your program will print a square of the selected color with details about it.
+Calling the function `colorate` inside your program will return a printable string of the desired color.
 
 ### Parameters
 
-The function accept most color names, RGB values ```[0-255];[0-255];[0-255]```, Hex values ```#[00-FF][00-FF][00-FF]```, xterm color number in the format ```x[0-255]```, and ANSI codes.[^Note]
+The function accept most color names, RGB values `[0-255];[0-255];[0-255]`, Hex values `#[00-FF][00-FF][00-FF]`, xterm color number in the format `x[0-255]`, and ANSI codes.[^Note]
 
 [^Note]: The output color might differ from the desired one depending on terminal used.
 
 ### Examples
 
-Here are some examples of how to use polychromy.
-
 <!--- Example 01 --->
+
 #### Show
 
-Using the function ```show``` you can print out color details such as Hex and RGB values of a given colour in a square of the given colour.
+Using the function `show` you can print out color details such as Hex and RGB values of a given colour in a square of the given colour.
 
 ```Python
 import sys
@@ -94,7 +99,6 @@ if len(sys.argv) == 1:
 
 else:
     show()
-
 ```
 
 ##### Output 1
@@ -102,9 +106,10 @@ else:
 ![example01](https://raw.githubusercontent.com/scalvaruso/polychromy/main/images/example01.png)
 
 <!--- Example 02 --->
+
 #### Colorate
 
-Using the function ```colorate``` you can print text of a specified colour in a specified colour background.
+Using the function `colorate` you can print text of a specified colour in a specified colour background.
 
 ```Python
 from polychromy import colorate
@@ -123,7 +128,6 @@ background_2 = "Cosmic Latte"
 
 print(colorate(text1,foreground_1,background_1))
 print(colorate(text2,foreground_2,background_2))
-
 ```
 
 ##### Output 2

@@ -1,39 +1,51 @@
-#
+# polychromy
 <!--
+## [version] - YYYY-MM-DD
 
-### Added
-
-### Changed
-
-### Fixed
+- **Added**
+  - 
+- **Changed**
+  -
+- **Fixed**
+  -
 -->
-## [1.1.0] - 2024-04-10
+## [1.1.1] - 2025-09-28
 
-### Changed
+- **Changed**
 
-- Colors are now fetched from a remote .json file that can be updated in real time with new color names.
+  - Updated to support the latest version of `textlinebreaker`:
+    - Replaced deprecated `split_line` function with the `TextLineBreaker` class.
 
-### Fixed
+### [1.1.0] - 2024-04-10
 
-- Optimized algorithm to check validity of the color.
+- **Changed**
+  - Colors are now fetched from a remote .json file that can be updated in real time with new color names.
 
-## [1.0.2] - 2023-12-29
+- **Fixed**
+  - Optimized algorithm to check validity of the color.
 
-- **Fixed:** Resolved compatibility issue when color is defined by an integer.
+### [1.0.2] - 2023-12-29
 
-## [1.0.1] - 2023-12-27
+- **Fixed:**
+  - Resolved compatibility issue when color is defined by an integer.
 
-- **Changed:** Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
+### [1.0.1] - 2023-12-27
 
-## [1.0.0] - 2023-12-17
+- **Changed:**
+  - Removed ```(System Color)``` from unique color names (e.g., "Bright Blue (System Color)" --> "Bright Blue").
 
-- **Added:** Function ```Colorate``` to print any string using any color for background and for text.
+### [1.0.0] - 2023-12-17
 
-## [0.0.2] - 2023-12-04
+- **Added:**
+  - Function ```Colorate``` to print any string using any color for background and for text.
 
-- **Added:** Json file with list of colors.
-- **Changed:** Color list imported from json file
+### [0.0.2] - 2023-12-04
 
-## [0.0.1] - 2023-12-01
+- **Added:**
+  - Json file with list of colors.
+- **Changed:**
+  - Color list imported from json file
+
+### [0.0.1] - 2023-12-01
 
 - **First version**
