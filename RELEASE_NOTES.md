@@ -5,14 +5,10 @@
 - Updated to support the latest `textlinebreaker` API:  
   Replaced the old `split_line` function with the new `TextLineBreaker` class.
 
-___
-
-## Release Notes - Version 1.1.0
+### Release Notes - Version 1.1.0
 
 - Colors are now fetched from a remote .json file that can be updated in real time with new color names.
 - Optimized algorithm to check validity of the color.
-
-___
 
 ### Release Notes - Version 1.0.2
 
